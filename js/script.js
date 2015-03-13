@@ -9,8 +9,10 @@ window.addEventListener('load', init, true);
 function init() {
 	context = document.getElementById('canvas').getContext('2d');
 	drawCanvasBoundary();
-	snake = new Snake;
+	snake = new Snake();
 	snake.draw();
+	rat = new Rat();
+	rat.draw();
 }
 
 //绘画边界
@@ -20,7 +22,3 @@ function drawCanvasBoundary() {
 	context.strokeStyle = '#666';
 	context.strokeRect(0, 0, canvasWidth, canvasHeight);
 }
-
-
-
-
