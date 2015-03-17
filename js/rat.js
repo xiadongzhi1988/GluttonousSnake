@@ -1,4 +1,6 @@
-var Rat = function(context) {
+var Rat = function(context, width, height) {
+	this.width = width;
+	this.height = height;
 	this.context = context || window.context;
 }
 
