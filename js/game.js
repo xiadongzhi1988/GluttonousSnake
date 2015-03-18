@@ -4,6 +4,7 @@ var Game = function(context, width, height) {
 	this.height = height;
 	this.snake = new Snake(this.context, this.width, this.height);
 	this.rat = new Rat(this.context, this.width, this.height);
+	//this.gameMemento = {};//保存游戏初始化信息
 }
 
 Game.prototype = {
@@ -25,12 +26,36 @@ Game.prototype = {
 			}
 		}, true);
 	},
+	/*saveMemento: function() {
+		this.gameMemento.snake = this.snake;
+		this.gameMemento.rat = this.rat;
+	},
+	retrieveMemento: function() {
+		this.snake = this.gameMemento.snake;
+		this.rat = this.gameMemento.rat;
+	},*/
+	restart: function() {
+		this.snake = new Snake(this.context, this.width, this.height);
+		this.rat = new Rat(this.context, this.width, this.height);
+	},
 	draw: function() {
+		try {
+			this.snake.move();
+		} catch (e) {
+			if (e.message == 1) {
+				if (confirm("游戏失败，是否重新开始")) {
+					//this.retrieveMemento();
+					this.restart();
+				} else {
+					throw new Error(1, "游戏结束");
+				}
+			}
+		}
+
 		this.clearCanvasBoundary();
 		this.drawCanvasBoundary();
-		this.rat.draw();
-		this.snake.move();
 		this.snake.draw();
+		this.rat.draw();
 	},
 	drawCanvasBoundary: function() {
 		context.fillStyle = '#fff';

@@ -35,12 +35,36 @@ Snake.prototype = {
 			curr = curr.next;
 		}
 	},
+	isCrash: function(pos) {//检测贪吃蛇
+		//检测是否超出了画布区域
+		if (pos.x < 0 || pos.x + this.nodeSize > this.width || pos.y < 0 || pos.y + this.nodeSize > this.height) {
+			return true;
+		}
+
+		//检测是否碰到了贪吃蛇自身
+		var curr = this.head;
+
+		while (curr) {
+			if (curr.x === pos.x && curr.y === pos.y) {
+				return true;
+			}
+			curr = curr.next;
+		}
+
+		return false;
+	},
 	move: function() {
 		this.moveHead();//每次移动在头部新增一个节点
 		this.removeRear();//每次移动将尾部删掉
 	},
 	moveHead: function() {
-		var newHead = new BodyNode(this.nodeSize, this.getNewHeadPosition().x, this.getNewHeadPosition().y, this.context);
+		var newHeadPosition = this.getNewHeadPosition();
+
+		if (this.isCrash(newHeadPosition)) {
+			throw new Error(1, "Game Over!");
+		}
+
+		var newHead = new BodyNode(this.nodeSize, newHeadPosition.x, newHeadPosition.y, this.context);
 		newHead.next = this.head;
 		this.head = newHead;
 	},

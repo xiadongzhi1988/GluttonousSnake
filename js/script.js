@@ -1,7 +1,8 @@
 var context,//画布上下文
 	canvasWidth = 300,
 	canvasHeight = 300,
-	game;
+	game,
+	t;
 
 window.addEventListener('load', init, true);
 
@@ -12,12 +13,18 @@ function init() {
 
 	game.init();
 	//window.requestNextAnimationFrame(gameProcess);
-	setTimeout(gameProcess, 1000);
+	t = setTimeout(gameProcess, 1000);
 }
 
 function gameProcess(time) {
-	game.draw();
-	//window.requestNextAnimationFrame(gameProcess);
-	setTimeout(gameProcess, 1000);
+	try {
+		game.draw();
+		//window.requestNextAnimationFrame(gameProcess);
+		t = setTimeout(gameProcess, 1000);
+	} catch (e) {
+		if (e.message == 1) {
+			clearTimeout(t);
+		}
+	}
 }
 
