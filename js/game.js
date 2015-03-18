@@ -12,6 +12,18 @@ Game.prototype = {
 		this.drawCanvasBoundary();
 		this.rat.draw();
 		this.snake.draw();
+		this.initEvent();
+	},
+	initEvent: function() {
+		var self = this;
+		window.addEventListener('keydown', function(e) {
+			switch(e.keyCode) {
+				case 37: self.snake.moveLeft();break;//向左移
+				case 38: self.snake.moveUp();break;//向上移
+				case 39: self.snake.moveRight();break;//向右移
+				case 40: self.snake.moveDown();break;//向下移
+			}
+		}, true);
 	},
 	draw: function() {
 		this.clearCanvasBoundary();

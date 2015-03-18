@@ -44,6 +44,34 @@ Snake.prototype = {
 		newHead.next = this.head;
 		this.head = newHead;
 	},
+	moveUp: function() {
+		if (this.direction === 3) { //如果贪吃蛇是向下移动的，则不允许向上移动
+			return;
+		}
+
+		this.direction = 1;
+	},
+	moveRight: function() {
+		if (this.direction === 4) { //如果贪吃蛇是向左移动的，则不允许向右移动
+			return;
+		}
+
+		this.direction = 2;
+	},
+	moveDown: function() {
+		if (this.direction === 1) {//如果贪吃蛇是向上移动的，则不允许向下移动
+			return;
+		}
+
+		this.direction = 3;
+	},
+	moveLeft: function() {
+		if (this.direction == 2) {//如果贪吃蛇是向右移动的，则不允许向左移动
+			return;
+		}
+
+		this.direction = 4;
+	},
 	removeRear: function() {
 		var curr = this.head.next;
 		
@@ -59,9 +87,9 @@ Snake.prototype = {
 			pos.y -= this.moveSize;
 		} else if (this.direction === 2) { //往右移动
 			pos.x += this.moveSize;
-		} else if (this.direction == 3) {//往下移动
+		} else if (this.direction === 3) {//往下移动
 			pos.y += this.moveSize;
-		} else if (this.diretion == 4) {//往左移动
+		} else if (this.direction === 4) {//往左移动
 			pos.x -= this.moveSize;
 		}
 		return pos;
