@@ -9,6 +9,7 @@ var Snake = function(context, width, height) {
 	this.moveSize = 10; //每次移动10
 	this.nodeSize = 10; //节点的长度
 	this.head = null;//头结点
+	this.rat;//老鼠
 	this.init();
 }
 
@@ -30,7 +31,7 @@ Snake.prototype = {
 	},
 	draw: function() {
 		var curr = this.head;
-		for (var i = 0; i < 3; i++) {
+		for (var i = 0; i < this.size; i++) {
 			curr.draw();
 			curr = curr.next;
 		}
@@ -62,6 +63,11 @@ Snake.prototype = {
 
 		if (this.isCrash(newHeadPosition)) {
 			throw new Error(1, "Game Over!");
+		}
+
+		if (this.isCatch(newHeadPosition)) { //判断是否抓住了老鼠
+			this.catched = true;
+			this.rat.move();
 		}
 
 		var newHead = new BodyNode(this.nodeSize, newHeadPosition.x, newHeadPosition.y, this.context);
@@ -97,6 +103,12 @@ Snake.prototype = {
 		this.direction = 4;
 	},
 	removeRear: function() {
+		if (this.catched) {
+			this.catched = false;
+			this.size++;
+			return;
+		}
+
 		var curr = this.head.next;
 		
 		//循环长度 -1次
@@ -117,6 +129,13 @@ Snake.prototype = {
 			pos.x -= this.moveSize;
 		}
 		return pos;
+	},
+	isCatch: function(headPos) {
+		var ratPos = this.rat.getPos();
+		if (headPos.x == ratPos.x && headPos.y == ratPos.y) {
+			return true;
+		}
+		return false;
 	}
 }
 

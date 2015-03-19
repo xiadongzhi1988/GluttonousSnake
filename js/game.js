@@ -4,6 +4,7 @@ var Game = function(context, width, height) {
 	this.height = height;
 	this.snake = new Snake(this.context, this.width, this.height);
 	this.rat = new Rat(this.context, this.width, this.height);
+	this.snake.rat = this.rat;
 	//this.gameMemento = {};//保存游戏初始化信息
 }
 

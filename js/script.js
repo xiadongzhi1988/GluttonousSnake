@@ -13,14 +13,14 @@ function init() {
 
 	game.init();
 	//window.requestNextAnimationFrame(gameProcess);
-	t = setTimeout(gameProcess, 1000);
+	t = setTimeout(gameProcess, 1000 / 2);
 }
 
 function gameProcess(time) {
 	try {
 		game.draw();
 		//window.requestNextAnimationFrame(gameProcess);
-		t = setTimeout(gameProcess, 1000);
+		t = setTimeout(gameProcess, 1000 / 2);
 	} catch (e) {
 		if (e.message == 1) {
 			clearTimeout(t);
